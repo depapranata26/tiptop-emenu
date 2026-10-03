@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Menu — TipTop Restaurant, Bakery &amp; Cake Shop</title>
+<meta name="description" content="E-Menu digital TipTop Restaurant, Bakery & Cake Shop Medan. Lihat daftar menu restaurant, bakery, es krim, dan minuman.">
+<meta name="theme-color" content="#33200f">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self';">
+<meta name="referrer" content="no-referrer">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#f5f1e8;color:#241a10;-webkit-tap-highlight-color:transparent}
+/* ===== HERO modern ===== */
+.hero{background:radial-gradient(130% 150% at 50% 0%,#53300f 0%,#2b1a08 58%,#1a0f04 100%);color:#f5ead0;padding:34px 18px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(55% 45% at 50% 100%,rgba(201,162,75,.16),transparent 70%);pointer-events:none}
+.eyebrow{display:inline-block;position:relative;z-index:1;letter-spacing:4px;font-size:10.5px;font-weight:800;color:#241a08;background:linear-gradient(135deg,#f0d189,#c9a24b);text-transform:uppercase;padding:6px 16px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.hero h1{position:relative;z-index:1;font-size:33px;margin:14px 0 5px;color:#faf3df;font-weight:800;letter-spacing:.5px}
+.hero .sub{position:relative;z-index:1;color:#d9c69a;font-size:13.5px}
+.hero .rule{display:none}
+.langs{display:flex;gap:8px;justify-content:center;margin-top:18px;flex-wrap:wrap;position:relative;z-index:1}
+.langs button{border:1px solid rgba(232,201,122,.45);background:rgba(255,255,255,.07);color:#e8c97a;font-size:12px;font-weight:700;letter-spacing:1px;padding:8px 18px;border-radius:999px;cursor:pointer;backdrop-filter:blur(4px);transition:all .15s}
+.langs button.active{background:linear-gradient(135deg,#f0d189,#c9a24b);border-color:transparent;color:#2b1a08;box-shadow:0 2px 10px rgba(201,162,75,.4)}
+/* ===== TOOLBAR ===== */
+.toolbar{position:sticky;top:0;z-index:30;background:rgba(245,241,232,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid #e9dfc9;padding:12px 12px 10px}
+.search{max-width:560px;margin:0 auto 10px;position:relative}
+.search input{width:100%;padding:13px 16px 13px 44px;border:none;border-radius:16px;font-size:15px;background:#fff;color:#241a10;outline:none;box-shadow:0 2px 14px rgba(60,35,10,.10)}
+.search input:focus{box-shadow:0 2px 14px rgba(60,35,10,.12),0 0 0 2px #c9a24b}
+.search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:19px;height:19px;stroke:#a89a83;fill:none;stroke-width:2}
+.tabs{display:flex;gap:8px;overflow-x:auto;max-width:900px;margin:0 auto;padding:2px 2px 6px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:none;background:#fff;color:#6b5a41;font-size:13.5px;font-weight:600;padding:9px 18px;border-radius:999px;cursor:pointer;white-space:nowrap;box-shadow:0 1px 6px rgba(60,35,10,.08);transition:all .15s}
+.tab small{font-weight:700;color:#a89a83;margin-left:6px;background:#f3ecdc;padding:2px 8px;border-radius:999px;font-size:11px}
+.tab.active{background:#2b1a08;color:#f5ead0;box-shadow:0 4px 14px rgba(43,26,8,.28)}
+.tab.active small{background:rgba(201,162,75,.28);color:#f0d189}
+/* ===== GRID & KARTU ===== */
+main{max-width:1100px;margin:0 auto;padding:16px 14px 48px}
+.count{font-size:12.5px;color:#9a8a70;margin:2px 2px 12px;font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px}}
+.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 2px 14px rgba(60,35,10,.09);display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease;cursor:pointer}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(60,35,10,.15)}
+.card:active{transform:scale(.98)}
+.im{aspect-ratio:4/3;background:linear-gradient(140deg,#e9dcc2,#d9c8a4);position:relative;overflow:hidden}
+.im img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.card:hover .im img{transform:scale(1.04)}
+.pbadge{position:absolute;right:10px;bottom:10px;background:rgba(28,17,4,.85);backdrop-filter:blur(6px);color:#f5d67b;font-weight:800;font-size:13.5px;padding:7px 13px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.3);letter-spacing:.2px}
+.pbadge.na{background:rgba(130,118,100,.9);color:#fff;font-weight:600;font-style:italic}
+.ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(140deg,#3a2210,#5a3a1c)}
+.ph span{font-size:54px;color:#c9a24b;opacity:.9;font-weight:800}
+.bd{padding:11px 14px 14px;display:flex;flex-direction:column;gap:5px;flex:1}
+.bd h3{font-size:14.5px;line-height:1.35;font-weight:650;color:#2b2118}
+.cat{font-size:10.5px;color:#c9a24b;text-transform:uppercase;letter-spacing:1.4px;font-weight:800}
+.empty{text-align:center;color:#8a7a64;padding:56px 20px;font-size:15px;grid-column:1/-1;background:#fff;border-radius:18px;box-shadow:0 2px 14px rgba(60,35,10,.06)}
+/* ===== FOOTER ===== */
+footer{background:linear-gradient(180deg,#241505,#180d02);color:#d8c49a;text-align:center;padding:36px 18px;font-size:13.5px}
+footer .fname{font-size:19px;color:#f0dfb8;margin-bottom:6px;font-weight:700}
+footer .credit{margin-top:14px;font-size:12px;color:#8a744f;letter-spacing:.5px}
+/* ===== TOMBOL & MODAL ===== */
+#top{position:fixed;right:16px;bottom:16px;width:48px;height:48px;border-radius:50%;border:none;background:#2b1a08;color:#f0dfb8;font-size:20px;cursor:pointer;display:none;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:40}
+#top.show{display:block}
+.modal-ov{position:fixed;inset:0;background:rgba(24,14,4,.65);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:18px}
+.modal-ov.open{display:flex}
+.modal{background:#fffdf8;border-radius:22px;max-width:430px;width:100%;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.4);animation:pop .2s ease;max-height:92vh;overflow-y:auto}
+@keyframes pop{from{transform:scale(.94) translateY(8px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.modal-wrap{position:relative}
+.modal .im{aspect-ratio:16/10;border-radius:0}
+.modal .bd{padding:18px 22px 24px}
+.modal .cat{font-size:11px;color:#c9a24b;text-transform:uppercase;letter-spacing:1.4px;font-weight:800}
+.modal h3{font-size:20px;line-height:1.35;font-weight:750;margin:6px 0 10px;color:#2b2118}
+.modal .price{display:inline-block;background:linear-gradient(135deg,#f0d189,#c9a24b);color:#2b1a08;font-weight:800;font-size:17px;padding:8px 18px;border-radius:999px}
+.modal .na{color:#b3a48c;font-style:italic;font-weight:500;font-size:15px}
+.modal-x{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;border:none;background:rgba(28,17,4,.6);backdrop-filter:blur(4px);color:#f3e7cd;font-size:21px;line-height:1;cursor:pointer}
+/* ===== SPLASH ===== */
+.splash{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .55s ease}
+.splash.show{opacity:1;pointer-events:auto}
+.splash .bg{position:absolute;inset:0;display:flex}
+.splash .half{flex:1;position:relative;overflow:hidden}
+.splash .half img{width:100%;height:100%;object-fit:cover;display:block;animation:slowzoom 9s ease-in-out infinite alternate}
+@keyframes slowzoom{from{transform:scale(1.06)}to{transform:scale(1.16)}}
+.splash .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,24,7,.62) 0%,rgba(40,24,7,.38) 45%,rgba(40,24,7,.88) 100%)}
+.splash .inner{position:relative;text-align:center;color:#f7ecd4;padding:24px;max-width:440px;transform:translateY(26px);opacity:0;transition:transform .65s ease .2s,opacity .65s ease .2s}
+.splash.show .inner{transform:none;opacity:1}
+.s-eyebrow{display:inline-block;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:800;color:#241a08;background:linear-gradient(135deg,#f0d189,#c9a24b);padding:7px 18px;border-radius:999px;margin-bottom:14px}
+.splash h1{font-size:46px;line-height:1.1;margin:0 0 8px;font-weight:800;text-shadow:0 2px 18px rgba(0,0,0,.45);letter-spacing:.5px}
+.s-by{font-size:15px;font-style:italic;color:#efe0bd;margin-bottom:28px}
+.s-btn{background:linear-gradient(135deg,#f0d189,#c9971f);border:none;color:#2b1a08;font-weight:800;font-size:16px;padding:14px 42px;border-radius:999px;cursor:pointer;box-shadow:0 8px 26px rgba(0,0,0,.4);transition:transform .15s}
+.s-btn:active{transform:scale(.96)}
+.s-hint{margin-top:16px;font-size:12px;color:#d9c69a}
+@media(max-width:560px){.splash .bg{flex-direction:column}.splash h1{font-size:38px}.hero h1{font-size:28px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow" id="eyebrow">E-Menu</div>
+  <h1>TipTop Restaurant</h1>
+  <div class="sub" id="heroSub">Bakery &amp; Cake Shop &bull; Medan</div>
+  <div class="rule"></div>
+  <div class="langs" id="langs"></div>
+</header>
+
+<div class="toolbar">
+  <div class="search">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+    <input id="q" type="search" placeholder="Cari menu…" autocomplete="off" aria-label="Cari menu">
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Kategori menu"></nav>
+</div>
+
+<main>
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <div class="fname">TipTop Restaurant, Bakery &amp; Cake Shop</div>
+  <div id="footLoc">Medan, Indonesia</div>
+  <div class="credit" id="footCredit"></div>
+  <!-- TAMBAHKAN ALAMAT, NOMOR TELEPON & JAM BUKA DI SINI -->
+</footer>
+
+<button id="top" aria-label="Kembali ke atas">&uarr;</button>
+
+<div class="modal-ov" id="modalOv">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-wrap">
+      <div class="im" id="mImg"></div>
+      <button class="modal-x" id="modalX" aria-label="Tutup">&times;</button>
+    </div>
+    <div class="bd">
+      <div class="cat" id="mCat"></div>
+      <h3 id="mName"></h3>
+      <div id="mPrice"></div>
+    </div>
+  </div>
+</div>
+
+<div class="splash" id="splash">
+  <div class="bg" aria-hidden="true">
+    <div class="half"><img src="images/menu_restaurant-bistik-lidah-lembu.webp" alt=""></div>
+    <div class="half"><img src="images/menu_restaurant-nasi-goreng-tiptop-spesial.webp" alt=""></div>
+  </div>
+  <div class="inner" role="dialog" aria-modal="true" aria-label="Menu Digital TipTop">
+    <div class="s-eyebrow">TipTop Restaurant, Bakery &amp; Cake Shop</div>
+    <h1 id="splashTitle">Menu Digital</h1>
+    <div class="s-by">by Depa Pranata</div>
+    <button class="s-btn" id="splashBtn">Lihat Menu</button>
+    <div class="s-hint" id="splashHint">Ketuk di mana saja untuk masuk</div>
+  </div>
+</div>
+
+<script>
+const IMG_BASE = "images/";
+const LANGS = ["id","en","nl","zh"];
+const LANG_LABEL = {id:"ID", en:"EN", nl:"NL", zh:"\u4e2d\u6587"};
+const STR = {
+id:{cats:{all:"Semua",restaurant:"Restaurant",bakery:"Bakery",eskrim:"Es Krim",minuman:"Minuman"},search:"Cari menu\u2026",empty:"Menu tidak ditemukan. Coba kata kunci lain.",na:"Tidak tersedia",sub:"Bakery & Cake Shop \u2022 Medan",eyebrow:"E-Menu",foot:"Medan, Indonesia",top:"Kembali ke atas",close:"Tutup",langLabel:"Pilih bahasa",credit:"Dibuat oleh Depa Pranata",splashTitle:"Menu Digital",splashBtn:"Lihat Menu",tapHint:"Ketuk di mana saja untuk masuk",title:"E-Menu \u2014 TipTop Restaurant, Bakery & Cake Shop",desc:"E-Menu digital TipTop Restaurant, Bakery & Cake Shop Medan. Lihat daftar menu restaurant, bakery, es krim, dan minuman.",showing:(a,b)=>`Menampilkan ${a} dari ${b} menu`},
+en:{cats:{all:"All",restaurant:"Restaurant",bakery:"Bakery",eskrim:"Ice Cream",minuman:"Drinks"},search:"Search menu\u2026",empty:"No items found. Try another keyword.",na:"Unavailable",sub:"Bakery & Cake Shop \u2022 Medan",eyebrow:"E-Menu",foot:"Medan, Indonesia",top:"Back to top",close:"Close",langLabel:"Choose language",credit:"Created by Depa Pranata",splashTitle:"Digital Menu",splashBtn:"View Menu",tapHint:"Tap anywhere to enter",title:"E-Menu \u2014 TipTop Restaurant, Bakery & Cake Shop",desc:"Digital e-menu of TipTop Restaurant, Bakery & Cake Shop Medan. Browse the restaurant, bakery, ice cream and drinks menus.",showing:(a,b)=>`Showing ${a} of ${b} items`},
+nl:{cats:{all:"Alles",restaurant:"Restaurant",bakery:"Bakkerij",eskrim:"IJs",minuman:"Dranken"},search:"Zoek in het menu\u2026",empty:"Niets gevonden. Probeer een ander zoekwoord.",na:"Niet beschikbaar",sub:"Bakkerij & Taartwinkel \u2022 Medan",eyebrow:"E-Menukaart",foot:"Medan, Indonesi\u00eb",top:"Terug naar boven",close:"Sluiten",langLabel:"Kies een taal",credit:"Gemaakt door Depa Pranata",splashTitle:"Digitale Menukaart",splashBtn:"Bekijk menu",tapHint:"Tik ergens om binnen te gaan",title:"E-Menukaart \u2014 TipTop Restaurant, Bakkerij & Taartwinkel",desc:"Digitale menukaart van TipTop Restaurant, Bakkerij & Taartwinkel Medan. Bekijk het restaurant-, bakkerij-, ijs- en drankenassortiment.",showing:(a,b)=>`${a} van ${b} items`},
+zh:{cats:{all:"\u5168\u90e8",restaurant:"\u9910\u5385",bakery:"\u9762\u5305\u5e97",eskrim:"\u51b0\u6dc7\u6dcb",minuman:"\u996e\u6599"},search:"\u641c\u7d22\u83dc\u5355\u2026",empty:"\u672a\u627e\u5230\u83dc\u54c1\uff0c\u8bf7\u5c1d\u8bd5\u5176\u4ed6\u5173\u952e\u8bcd\u3002",na:"\u6682\u65e0\u4f9b\u5e94",sub:"\u9762\u5305\u86cb\u7cd5\u5e97 \u2022 \u68c9\u5170",eyebrow:"\u7535\u5b50\u83dc\u5355",foot:"\u5370\u5ea6\u5c3c\u897f\u4e9a\u68c9\u5170",top:"\u56de\u5230\u9876\u90e8",close:"\u5173\u95ed",langLabel:"\u9009\u62e9\u8bed\u8a00",credit:"\u7531 Depa Pranata \u5236\u4f5c",splashTitle:"\u6570\u5b57\u83dc\u5355",splashBtn:"\u67e5\u770b\u83dc\u5355",tapHint:"\u70b9\u51fb\u4efb\u610f\u5904\u8fdb\u5165",title:"\u7535\u5b50\u83dc\u5355 \u2014 TipTop \u9910\u5385\u9762\u5305\u86cb\u7cd5\u5e97",desc:"TipTop \u9910\u5385\u9762\u5305\u86cb\u7cd5\u5e97\uff08\u68c9\u5170\uff09\u7535\u5b50\u83dc\u5355\u3002\u6d4f\u89c8\u9910\u5385\u3001\u9762\u5305\u5e97\u3001\u51b0\u6dc7\u6dcb\u548c\u996e\u6599\u83dc\u5355\u3002",showing:(a,b)=>`\u5171 ${b} \u9879\uff0c\u663e\u793a ${a} \u9879`}
+};
+let lang = "id";
+try{ lang = localStorage.getItem("tiptop-lang") || "id"; }catch(e){}
+if(LANGS.indexOf(lang) < 0) lang = "id";
+const LI = {en:0, nl:1, zh:2};
+const tname = n => lang === "id" ? n : ((TR[n] || [])[LI[lang]] || n);
+const S = () => STR[lang];
+const TR = {"Steak Lidah Lembu": ["Ox Tongue Steak", "Ossentongbiefstuk", "牛舌牛排"], "Steak Ayam": ["Chicken Steak", "Kipbiefstuk", "鸡排"], "Steak Kakap": ["Snapper Steak", "Snapperbiefstuk", "鲷鱼排"], "Steak Daging Sapi": ["Beef Steak", "Biefstuk", "牛排"], "Steak Komplit": ["Complete Steak", "Biefstuk compleet", "全套牛排"], "Steak Amerika": ["American Steak", "Amerikaanse biefstuk", "美式牛排"], "German Steak": ["German Steak", "Duitse biefstuk", "德式牛排"], "Wienerschnitzel": ["Wienerschnitzel", "Wienerschnitzel", "维也纳炸肉排"], "Nasi Goreng Tiptop": ["TipTop Fried Rice", "Nasi goreng TipTop", "TipTop炒饭"], "Nasi Goreng dengan Telur": ["Fried Rice with Egg", "Nasi goreng met ei", "鸡蛋炒饭"], "Nasi Goreng Seafood": ["Seafood Fried Rice", "Nasi goreng met zeevruchten", "海鲜炒饭"], "Nasi Goreng Ham Sapi dan Telur": ["Fried Rice with Beef Ham and Egg", "Nasi goreng met runderham en ei", "牛肉火腿鸡蛋炒饭"], "Nasi Goreng Ikan Asin": ["Fried Rice with Salted Fish", "Nasi goreng met gezouten vis", "咸鱼炒饭"], "Nasi Goreng Kombinasi": ["Combination Fried Rice", "Nasi goreng combinatie", "什锦炒饭"], "Nasi Goreng Udang": ["Shrimp Fried Rice", "Nasi goreng met garnalen", "虾仁炒饭"], "Kwetiau Kuah": ["Flat Rice Noodles in Soup", "Kwetiau in soep", "汤粿条"], "Kwetiau Goreng": ["Fried Flat Rice Noodles", "Gebakken kwetiau", "炒粿条"], "Mie Goreng Indonesia": ["Indonesian Fried Noodles", "Indonesische bami goreng", "印尼炒面"], "Ifu Mie Goreng Saus": ["Crispy Noodles with Sauce", "Krokante mie met saus", "酱汁脆面"], "Mie Kuah": ["Noodles in Soup", "Mie in soep", "汤面"], "Bihun Goreng": ["Fried Rice Vermicelli", "Gebakken bihun", "炒米粉"], "Bihun Kuah": ["Rice Vermicelli in Soup", "Bihun in soep", "汤米粉"], "Bihun Goreng Seafood": ["Seafood Fried Rice Vermicelli", "Gebakken bihun met zeevruchten", "海鲜炒米粉"], "Ifu Mie Goreng": ["Crispy Fried Noodles", "Krokante gebakken mie", "脆炒面"], "Nasi Capcay": ["Rice with Mixed Vegetables", "Rijst met capcai-groenten", "什锦菜饭"], "Sahofan": ["Sa Oh Fan Noodles", "Sa oh fan", "沙河粉"], "Sahofan Tauco Sapi": ["Sa Oh Fan with Beef in Tauco Sauce", "Sa oh fan met rundvlees in taucosaus", "豆酱牛肉沙河粉"], "Omelet Jamur": ["Mushroom Omelette", "Champignonomelet", "蘑菇蛋卷"], "Omelet Kentang & Sayur": ["Potato and Vegetable Omelette", "Aardappel-groenteomelet", "土豆蔬菜蛋卷"], "Uitsmijter": ["Uitsmijter", "Uitsmijter", "荷兰火腿煎蛋面包"], "Telur Dadar dengan Roti": ["Omelette with Bread", "Omelet met brood", "蛋饼配面包"], "Roti Coklat": ["Chocolate Bread", "Chocoladebrood", "巧克力面包"], "Roti Daging": ["Minced Meat Bread", "Brood met gehakt", "肉末面包"], "Roti Ham & Keju": ["Ham and Cheese Bread", "Ham-kaasbrood", "火腿芝士面包"], "Roti Mentega": ["Butter Bread", "Boterbrood", "黄油面包"], "Roti Telur": ["Egg Bread", "Eierbrood", "鸡蛋面包"], "Salad Ayam": ["Chicken Salad", "Kipsalade", "鸡肉沙拉"], "Salad Daging": ["Beef Salad", "Vleessalade", "牛肉沙拉"], "Salad Sayur": ["Vegetable Salad", "Groentesalade", "蔬菜沙拉"], "Salad Telur": ["Egg Salad", "Eiersalade", "鸡蛋沙拉"], "Salad Udang": ["Shrimp Salad", "Garnalensalade", "虾仁沙拉"], "Huzaren Salad": ["Huzaren Salad", "Huzarensalade", "荷兰肉沙拉"], "Bitterballen": ["Bitterballen", "Bitterballen", "荷兰炸肉丸"], "Kentang Goreng": ["French Fries", "Patat friet", "薯条"], "Kroket Sapi": ["Beef Croquette", "Runderkroket", "牛肉炸丸子"], "Risol Sapi": ["Beef Rissole", "Runderrissole", "牛肉炸卷"], "Pisang Goreng": ["Fried Banana", "Gebakken banaan", "炸香蕉"], "Pancake Coklat": ["Chocolate Pancake", "Chocoladepannenkoek", "巧克力煎饼"], "Pancake Gula Merah": ["Palm Sugar Pancake", "Pannenkoek met palmsuiker", "棕榈糖煎饼"], "Pancake Pisang": ["Banana Pancake", "Bananenpannenkoek", "香蕉煎饼"], "Sup Asparagus Kepiting": ["Asparagus Crab Soup", "Aspergesoep met krab", "芦笋蟹肉汤"], "Sup Ayam": ["Chicken Soup", "Kippensoep", "鸡汤"], "Sup Bakso Ikan": ["Fish Ball Soup", "Visballensoep", "鱼丸汤"], "Sup Daging": ["Beef Soup", "Vleessoep", "牛肉汤"], "Sup Jagung Ayam": ["Chicken Corn Soup", "Maïssoep met kip", "鸡肉玉米汤"], "Sup Jagung Kepiting": ["Crab Corn Soup", "Maïssoep met krab", "蟹肉玉米汤"], "Sup Tomat Sapi": ["Beef Tomato Soup", "Tomatensoep met rundvlees", "牛肉番茄汤"], "Sup Ikan": ["Fish Soup", "Vissoep", "鱼汤"], "Sup Sayur": ["Vegetable Soup", "Groentesoep", "蔬菜汤"], "Sup Jamur": ["Mushroom Soup", "Champignonsoep", "蘑菇汤"], "Ayam Bawang Bombay": ["Chicken with Onions", "Kip met uien", "洋葱鸡"], "Ayam Goreng Mentega": ["Butter Fried Chicken", "Kip in botersaus", "奶油炸鸡"], "Ayam Goreng Saus": ["Fried Chicken with Sauce", "Gebakken kip met saus", "酱汁炸鸡"], "Ayam Goreng Semboi": ["Fried Chicken with Preserved Plum", "Gebakken kip met pruim", "话梅炸鸡"], "Ayam Gulung": ["Rolled Chicken", "Kiprolletjes", "鸡肉卷"], "Ayam Asam Manis": ["Sweet and Sour Chicken", "Kip in zoetzure saus", "咕咾鸡"], "Ayam Jamur": ["Chicken with Mushrooms", "Kip met champignons", "香菇鸡"], "Ayam Mabok": ["Drunken Chicken", "Dronken kip", "醉鸡"], "Capcay Goreng": ["Fried Mixed Vegetables", "Gebakken capcai", "炒什锦菜"], "Capcay Kuah": ["Mixed Vegetables in Broth", "Capcai in bouillon", "汤什锦菜"], "Capcay Seafood": ["Seafood Mixed Vegetables", "Capcai met zeevruchten", "海鲜什锦菜"], "Cumi-cumi Goreng Mentega": ["Butter Fried Squid", "Inktvis in botersaus", "奶油炒鱿鱼"], "Cumi-cumi Tauco": ["Squid in Tauco Sauce", "Inktvis in taucosaus", "豆酱鱿鱼"], "Fuyunghai Bulat": ["Round Fooyonghai", "Ronde foe yong hai", "圆形芙蓉蛋"], "Fuyunghai Hancur": ["Scrambled Fooyonghai", "Roerei foe yong hai", "炒芙蓉蛋"], "Hot Plate Ayam": ["Chicken Hot Plate", "Kip op hete plaat", "铁板鸡"], "Hot Plate Daging Sapi": ["Beef Hot Plate", "Rundvlees op hete plaat", "铁板牛肉"], "Hot Plate Kangkung Seafood": ["Water Spinach & Seafood Hot Plate", "Kangkung met zeevruchten op hete plaat", "铁板通菜海鲜"], "Hot Plate Udang": ["Shrimp Hot Plate", "Garnalen op hete plaat", "铁板虾"], "Ikan Asam Manis": ["Sweet and Sour Fish", "Vis in zoetzure saus", "咕咾鱼"], "Ikan Kakap Goreng": ["Fried Snapper", "Gebakken snapper", "炸鲷鱼"], "Ikan Kukus": ["Steamed Fish", "Gestoomde vis", "清蒸鱼"], "Ikan Gulung": ["Rolled Fish", "Visrolletjes", "鱼卷"], "Jamur Goreng Rebung": ["Fried Mushrooms with Bamboo Shoots", "Gebakken champignons met bamboescheuten", "炒蘑菇竹笋"], "Kailan Ayam": ["Kailan with Chicken", "Kailan met kip", "芥兰鸡"], "Kailan Jamur": ["Kailan with Mushrooms", "Kailan met champignons", "香菇芥兰"], "Kailan Sapi": ["Kailan with Beef", "Kailan met rundvlees", "芥兰牛肉"], "Kailan Saus Tiram": ["Kailan in Oyster Sauce", "Kailan in oestersaus", "蚝油芥兰"], "Angsio Tahu": ["Angsio Tofu", "Angsio-tofu", "红烧豆腐"], "Angsio Tahu Jepang": ["Angsio Japanese Tofu", "Angsio met Japanse tofu", "红烧日本豆腐"], "Sapi Cabe Kering": ["Beef with Dried Chili", "Rundvlees met gedroogde chili", "干辣椒牛肉"], "Steak Sapi ala Hong Kong": ["Hong Kong Style Beef Steak", "Runderbiefstuk Hongkongse stijl", "港式牛排"], "Tauge Ikan Asin": ["Bean Sprouts with Salted Fish", "Taugé met gezouten vis", "咸鱼豆芽"], "Tumis Ayam dengan Cabe Kering": ["Stir-fried Chicken with Dried Chili", "Roerbakkip met gedroogde chili", "干辣椒炒鸡"], "Tumis Ayam Kacang Mente": ["Stir-fried Chicken with Cashew Nuts", "Roerbakkip met cashewnoten", "腰果炒鸡"], "Tumis Udang Cabe Kering": ["Stir-fried Shrimp with Dried Chili", "Roerbakgarnalen met gedroogde chili", "干辣椒炒虾"], "Udang Goreng Mentega": ["Butter Fried Shrimp", "Garnalen in botersaus", "奶油虾"], "Udang Goreng Tepung": ["Breaded Fried Shrimp", "Gepaneerde garnalen", "炸虾"], "Udang Saus Tomat": ["Shrimp in Tomato Sauce", "Garnalen in tomatensaus", "番茄虾"], "Udang Kukus": ["Steamed Shrimp", "Gestoomde garnalen", "清蒸虾"], "Ikan Cabe Kering": ["Fish with Dried Chili", "Vis met gedroogde chili", "干辣椒鱼"],   "Sapi Kecap": ["Beef in Soy Sauce", "Rundvlees in ketjap", "酱油牛肉"], "Tahu Sapi Saus Pedas": ["Beef and Tofu in Spicy Sauce", "Tofu met rundvlees in pittige saus", "辣酱牛肉豆腐"], "Shrimp Cocktail": ["Shrimp Cocktail", "Garnalencocktail", "鸡尾虾"], "Rendang Daging": ["Beef Rendang", "Runderrendang", "仁当牛肉"], "Gado-Gado": ["Gado-Gado", "Gado gado", "加多加多沙拉"], "Roti Ham atau Keju": ["Ham/Cheese Bread", "Ham-/kaasbrood", "火腿/芝士面包"], "Sup Tomat": ["Tomato Soup", "Tomatensoep", "番茄汤"], "Sup Telur": ["Egg Drop Soup", "Eiersoep", "蛋花汤"], "Sup Asparagus Kepiting (Eropa)": ["European Asparagus Crab Soup", "Europese aspergesoep met krab", "欧式芦笋蟹肉汤"], "Sup Jagung dengan Rebung & Kepiting": ["Corn Soup with Bamboo Shoots & Crab", "Maïssoep met bamboescheuten en krab", "竹笋蟹肉玉米汤"], "Telur Dadar Tomat dengan Roti": ["Tomato Omelette with Bread", "Tomatenomelet met brood", "番茄蛋饼配面包"], "Telur Dadar Daging dengan Roti": ["Meat Omelette with Bread", "Vleesomelet met brood", "肉末蛋饼配面包"], "Omelet Ham atau Keju": ["Ham/Cheese Omelette", "Ham-/kaasomelet", "火腿/芝士蛋卷"], "Omelet Ham & Keju": ["Ham & Cheese Omelette", "Ham-kaasomelet", "火腿芝士蛋卷"], "Telur Dadar Udang dengan Roti": ["Shrimp Omelette with Bread", "Garnalenomelet met brood", "虾仁蛋饼配面包"], "Telur Mata Sapi": ["Sunny-side-up Egg", "Spiegelei", "煎蛋"], "Steak Kakap Rebus dengan Kentang & Sayur": ["Boiled Snapper Steak with Potatoes & Vegetables", "Gekookte snapperbiefstuk met aardappelen en groenten", "水煮鲷鱼排配土豆蔬菜"], "Ikan Tauco": ["Fish in Tauco Sauce", "Vis in taucosaus", "豆酱鱼"], "Steak Udang": ["Shrimp Steak", "Garnalenbiefstuk", "虾排"], "Daging Mentah, Roti & Margarin": ["Raw Beef with Bread & Margarine", "Rauwe biefstuk met brood en margarine", "生牛肉配面包和人造黄油"], "Nasi Goreng Tanpa Telur": ["Fried Rice without Egg", "Nasi goreng zonder ei", "无蛋炒饭"], "Ayam Kukus": ["Steamed Chicken", "Gestoomde kip", "清蒸鸡"], "Tumis Udang Kacang Mente": ["Stir-fried Shrimp with Cashew Nuts", "Roerbakgarnalen met cashewnoten", "腰果炒虾"], "Udang Goreng": ["Fried Shrimp", "Gebakken garnalen", "炸虾"], "Cumi-cumi Cabe Kering": ["Squid with Dried Chili", "Inktvis met gedroogde chili", "干辣椒鱿鱼"], "Sapi Bawang Bombay": ["Beef with Onions", "Rundvlees met uien", "洋葱牛肉"], "Sapi Rebung": ["Beef with Bamboo Shoots", "Rundvlees met bamboescheuten", "竹笋牛肉"], "Tumis Kangkung": ["Stir-fried Water Spinach", "Roerbak-kangkung", "炒通菜"], "Oyster Kailan": ["Kailan in Oyster Sauce", "Kailan in oestersaus", "蚝油芥兰"], "Hot Plate Ikan": ["Fish Hot Plate", "Vis op hete plaat", "铁板鱼"], "Steak Ayam ala Hong Kong": ["Hong Kong Style Chicken Steak", "Kipbiefstuk Hongkongse stijl", "港式鸡排"], "Ayam Goreng Bawang Putih": ["Garlic Fried Chicken", "Kip met knoflook", "蒜香炸鸡"], "Mocca Taart Persegi 25x25cm": ["Square Mocha Cake 25x25cm", "Vierkante mochataart 25x25cm", "方形摩卡蛋糕 25x25cm"], "Mocca Taart Persegi Tabur Meses 25x25cm": ["Square Mocha Cake with Sprinkles 25x25cm", "Vierkante mochataart met hagelslag 25x25cm", "方形摩卡巧克力米蛋糕 25x25cm"], "Mocca Taart Bulat 25x25cm": ["Round Mocha Cake 25x25cm", "Ronde mochataart 25x25cm", "圆形摩卡蛋糕 25x25cm"], "Mocca Taart Love": ["Heart-shaped Mocha Cake", "Hartvormige mochataart", "心形摩卡蛋糕"], "Mocca Ekstra Persegi 30x30cm": ["Extra Large Square Mocha Cake 30x30cm", "Extra grote vierkante mochataart 30x30cm", "特大方形摩卡蛋糕 30x30cm"], "Irish Taart Persegi 25x25cm": ["Square Irish Cake 25x25cm", "Vierkante Irish-taart 25x25cm", "方形爱尔兰蛋糕 25x25cm"], "Taart Coklat Persegi 25x25cm": ["Square Chocolate Cake 25x25cm", "Vierkante chocoladetaart 25x25cm", "方形巧克力蛋糕 25x25cm"], "Ekstra Mini Mocca Persegi 12,5x25cm": ["Extra Mini Square Mocha Cake 12.5x25cm", "Extra mini vierkante mochataart 12,5x25cm", "特小方形摩卡蛋糕 12.5x25cm"], "Ekstra Mini Tabur Meses 12,5x25cm": ["Extra Mini Cake with Sprinkles 12.5x25cm", "Extra mini taart met hagelslag 12,5x25cm", "特小巧克力米蛋糕 12.5x25cm"], "Ekstra Mini Coklat 12,5x25cm": ["Extra Mini Chocolate Cake 12.5x25cm", "Extra mini chocoladetaart 12,5x25cm", "特小巧克力蛋糕 12.5x25cm"], "Aneka Irish": ["Irish Cake Slice", "Plak Irish-taart", "爱尔兰蛋糕块"], "Kue Taartjes Mocca Meses Coklat": ["Mocca Chocolate Tartlets", "Moccataartjes met chocoladehagelslag", "摩卡巧克力米小蛋糕"], "Roti Sosis": ["Sausage Roll", "Saucijzenbroodje", "香肠面包"], "Roti Ayam": ["Chicken Bread", "Kippenbrood", "鸡肉面包"], "Risol Ayam": ["Chicken Rissole", "Kippenrissole", "鸡肉炸卷"], "Donat Bulat": ["Round Donut", "Ronde donut", "圆形甜甜圈"], "Aneka Kue - Donat Sate": ["Donut Satay", "Donutsaté", "串烧甜甜圈"], "Aneka Kue - Piramide": ["Pyramid Cake", "Piramidegebak", "金字塔蛋糕"], "Aneka Kue - Horen": ["Horn Pastry", "Horen", "牛角酥"], "Aneka Kue - Kue Soes": ["Choux Pastry", "Soes", "泡芙"], "Aneka Kue - Pie Nanas": ["Pineapple Pie", "Ananastaartje", "凤梨派"], "Aneka Kue - Ombykoek": ["Ombykoek", "Ombykoek", "Ombykoek蛋糕"], "Roti Tawar": ["White Bread", "Witbrood", "白面包"], "Spekulaas": ["Spekulaas", "Speculaas", "香料饼干"], "Spekulaas Pop": ["Spekulaas Pop", "Speculaaspop", "香料饼干人"], "Coklat Baton Kecil": ["Small Chocolate Bar", "Kleine chocoladereep", "小巧克力棒"], "Kattetong": ["Cat's Tongue Cookies", "Kattentongen", "猫舌饼干"], "Mocca Ekstra Bulat": ["Extra Large Round Mocca Cake", "Extra grote ronde moccataart", "特大圆形摩卡蛋糕"], "Mocca Super Persegi": ["Super Square Mocca Cake", "Super vierkante moccataart", "超级方形摩卡蛋糕"], "Mocca Super Bulat": ["Super Round Mocca Cake", "Super ronde moccataart", "超级圆形摩卡蛋糕"], "Irish Ekstra Persegi": ["Extra Large Square Irish Cake", "Extra grote vierkante Irish-taart", "特大方形爱尔兰蛋糕"], "Irish Ekstra Bulat": ["Extra Large Round Irish Cake", "Extra grote ronde Irish-taart", "特大圆形爱尔兰蛋糕"], "Irish Super Persegi": ["Super Square Irish Cake", "Super vierkante Irish-taart", "超级方形爱尔兰蛋糕"], "Irish Super Bulat": ["Super Round Irish Cake", "Super ronde Irish-taart", "超级圆形爱尔兰蛋糕"], "Irish Ekstra Mini": ["Extra Mini Irish Cake", "Extra mini Irish-taart", "特小爱尔兰蛋糕"], "Irish Bulat": ["Round Irish Cake", "Ronde Irish-taart", "圆形爱尔兰蛋糕"], "Irish Love": ["Heart-shaped Irish Cake", "Hartvormige Irish-taart", "心形爱尔兰蛋糕"], "Taart Coklat Bulat": ["Round Chocolate Cake", "Ronde chocoladetaart", "圆形巧克力蛋糕"], "Taart Coklat Ekstra Persegi": ["Extra Large Square Chocolate Cake", "Extra grote vierkante chocoladetaart", "特大方形巧克力蛋糕"], "Taart Coklat Ekstra Bulat": ["Extra Large Round Chocolate Cake", "Extra grote ronde chocoladetaart", "特大圆形巧克力蛋糕"], "Taart Coklat Super Persegi": ["Super Square Chocolate Cake", "Super vierkante chocoladetaart", "超级方形巧克力蛋糕"], "Taart Coklat Super Bulat": ["Super Round Chocolate Cake", "Super ronde chocoladetaart", "超级圆形巧克力蛋糕"], "Taart Coklat Love": ["Heart-shaped Chocolate Cake", "Hartvormige chocoladetaart", "心形巧克力蛋糕"], "Kastengel": ["Cheese Sticks", "Kaastengels", "芝士条"], "Aneka Kue - Moorkop Bulat": ["Round Moorkop", "Ronde moorkop", "圆形摩卡泡芙"], "Aneka Kue - Moorkop Panjang": ["Long Moorkop", "Lange moorkop", "长形摩卡泡芙"], "Aneka Kue - Muffin": ["Muffin", "Muffin", "玛芬蛋糕"], "One Month Baby Cake": ["One Month Baby Cake", "Taart voor de eerste maand", "满月蛋糕"], "Kacang Tojin": ["Tojin Peanuts", "Tojin-pinda's", "豆仁花生"], "Nastar": ["Pineapple Tarts", "Nastar", "凤梨酥"], "Java": ["Java", "Java", "爪哇冰淇淋"], "Ystaart": ["Ystaart", "IJstaart", "冰淇淋蛋糕"], "Pukler": ["Pukler", "Pukler", "Pukler冰淇淋"], "Es Krim Single": ["Single Ice Cream", "IJsje (1 bol)", "单球冰淇淋"], "Es Krim Double": ["Double Ice Cream", "IJsje (2 bollen)", "双球冰淇淋"], "Es Johor": ["Es Johor", "Es johor", "柔佛冰"], "Banana Split": ["Banana Split", "Banana split", "香蕉船"], "Moorkop Ice": ["Moorkop Ice", "Moorkop-ijs", "摩卡泡芙冰淇淋"], "Es Krim Carmen Ice": ["Carmen Ice Cream", "Carmen-ijs", "卡门冰淇淋"], "Es Krim Buah": ["Fruit Ice Cream", "Vruchtenijs", "水果冰淇淋"], "Peach Melba": ["Peach Melba", "Pêche melba", "蜜桃梅尔芭"], "Es Krim Tutti Frutti": ["Tutti Frutti Ice Cream", "Tutti frutti-ijs", "什锦水果冰淇淋"], "Nougat Ice": ["Nougat Ice", "Nougat-ijs", "牛轧糖冰淇淋"], "Morning Glory": ["Morning Glory", "Morning glory", "Morning Glory冰淇淋"], "Cafe Glace": ["Café Glacé", "Café glacé", "冰咖啡"], "Sorbet Tiptop": ["TipTop Sorbet", "Sorbet TipTop", "TipTop雪葩"], "Wiener Cafe": ["Wiener Café", "Wiener café", "维也纳咖啡"], "Mexicaner": ["Mexicaner", "Mexicaner", "墨西哥冰淇淋"], "Donauwellen": ["Donauwellen", "Donauwellen", "多瑙河波浪蛋糕"], "Es Krim Soda": ["Es Krim Soda", "IJssoda", "冰淇淋苏打"], "Es Krim Coklat & Vanila": ["Chocolate & Vanilla", "Chocolade & vanille", "巧克力香草"], "Kopi Panas": ["Hot Coffee", "Warme koffie", "热咖啡"], "Kopi Susu Dingin": ["Iced Milk Coffee", "IJskoffie met melk", "冰奶咖啡"], "Lemon Tea": ["Lemon Tea", "Citroenthee", "柠檬茶"], "Lime": ["Lime", "Limoen", "青柠"], "Teh": ["Tea", "Thee", "茶"], "Teh Dingin": ["Iced Tea", "IJsthee", "冰茶"], "Chinese Tea": ["Chinese Tea", "Chinese thee", "中国茶"], "Jus Alpukat": ["Avocado Juice", "Avocadosap", "牛油果汁"], "Jus Sirsak": ["Soursop Juice", "Zuurzaksap", "红毛榴莲汁"], "Jus Kuini": ["Kuini Juice", "Koeinissap", "奎尼芒果汁"], "Jus Belimbing": ["Starfruit Juice", "Stervruchtsap", "杨桃汁"], "Jus Jambu": ["Guava Juice", "Guavesap", "番石榴汁"], "Jus Jeruk": ["Orange Juice", "Sinaasappelsap", "橙汁"], "Jus Markisa": ["Passion Fruit Juice", "Passievruchtsap", "百香果汁"], "Jus Martabe": ["Martabe Juice", "Martabesap", "Martabe果汁"], "Jus Melon": ["Melon Juice", "Meloensap", "哈密瓜汁"], "Jus Nanas": ["Pineapple Juice", "Ananassap", "凤梨汁"], "Jus Pepaya": ["Papaya Juice", "Papajasap", "木瓜汁"], "Jus Semangka": ["Watermelon Juice", "Watermeloensap", "西瓜汁"], "Jus Timun": ["Cucumber Juice", "Komkommersap", "黄瓜汁"], "Jus Tomat": ["Tomato Juice", "Tomatensap", "番茄汁"], "Jus Wortel": ["Carrot Juice", "Wortelsap", "胡萝卜汁"], "Fruit Cocktail": ["Fruit Cocktail", "Vruchtencocktail", "什锦水果杯"], "Longan": ["Longan", "Longan", "龙眼"], "Jus Mix": ["Mixed Juice", "Mixsap", "综合果汁"], "Kopi Susu Dingin Botol": ["Bottled Iced Milk Coffee", "IJskoffie met melk (fles)", "瓶装冰奶咖啡"], "Kopi Susu Panas": ["Hot Milk Coffee", "Warme koffie met melk", "热奶咖啡"], "Kopi Dingin": ["Iced Coffee", "IJskoffie", "冰咖啡"], "Teh Susu Panas": ["Hot Milk Tea", "Warme melkthee", "热奶茶"], "Teh Susu Dingin": ["Iced Milk Tea", "IJsmelkthee", "冰奶茶"], "Coklat Susu Panas": ["Hot Chocolate Milk", "Warme chocolademelk", "热巧克力牛奶"], "Coklat Susu Dingin": ["Iced Chocolate Milk", "IJskoude chocolademelk", "冰巧克力牛奶"], "Slagroom": ["Whipped Cream", "Slagroom", "鲜奶油"], "Susu Panas": ["Hot Milk", "Warme melk", "热牛奶"], "Jus Mangga": ["Mango Juice", "Mangosap", "芒果汁"], "Jus Terong Belanda": ["Tamarillo Juice", "Tamarillosap", "树番茄汁"], "Buah-buahan Segar": ["Fresh Fruits", "Vers fruit", "新鲜水果"], "Coca Cola": ["Coca-Cola", "Coca-Cola", "可口可乐"], "Sprite": ["Sprite", "Sprite", "雪碧"], "Milk Soda": ["Milk Soda", "Melkfrisdrank", "牛奶苏打"], "Fanta Orange / Red": ["Fanta Orange / Red", "Fanta orange / red", "芬达橙味/红味"], "Badak Sarsi": ["Badak Sarsi", "Badak sarsi", "Badak沙士"], "Aqua Besar": ["Large Aqua", "Grote Aqua", "大瓶Aqua矿泉水"], "Aqua Kecil": ["Small Aqua", "Kleine Aqua", "小瓶Aqua矿泉水"], "Heineken Big": ["Heineken (Large)", "Heineken (groot)", "喜力啤酒（大）"], "Bintang/Anker Big": ["Bintang/Anker (Large)", "Bintang/Anker (groot)", "星牌/安卡啤酒（大）"], "Bintang/Anker Small": ["Bintang/Anker (Small)", "Bintang/Anker (klein)", "星牌/安卡啤酒（小）"], "Guinness Stout": ["Guinness Stout", "Guinness stout", "健力士黑啤"], "Bintang Crystal": ["Bintang Crystal", "Bintang Crystal", "星牌水晶啤酒"], "Kopi Susu Segar Panas": ["Milk Coffee with Fresh Hot Milk", "Koffie met verse warme melk", "鲜热奶咖啡"]};
+/* [nama, harga ("-" = tidak tersedia), file gambar ("" = tanpa gambar), kategori] */
+const MENU = [
+["Steak Lidah Lembu","Rp 99.000","menu_restaurant-bistik-lidah-lembu.webp","restaurant"],
+["Steak Ayam","Rp 87.000","menu_restaurant-bistik-ayam.webp","restaurant"],
+["Steak Kakap","Rp 87.000","menu_restaurant-bistik-kakap.webp","restaurant"],
+["Steak Daging Sapi","Rp 87.000","menu_restaurant-bistik-daging.webp","restaurant"],
+["Steak Komplit","Rp 94.000","menu_restaurant-bistik-complete.webp","restaurant"],
+["Steak Amerika","Rp 97.000","menu_restaurant-bistik-amerika.webp","restaurant"],
+["German Steak","Rp 87.000","menu_restaurant-german-steak.webp","restaurant"],
+["Wienerschnitzel","Rp 87.000","menu_restaurant-wienerschnitzel.webp","restaurant"],
+["Nasi Goreng Tiptop","Rp 58.000","menu_restaurant-nasi-goreng-tiptop-spesial.webp","restaurant"],
+["Nasi Goreng dengan Telur","Rp 41.000","","restaurant"],
+["Nasi Goreng Seafood","Rp 46.000","menu_restaurant-nasi-goreng-seafood.webp","restaurant"],
+["Nasi Goreng Ham Sapi dan Telur","Rp 46.000","menu_restaurant-nasi-goreng-ham-sapi-dan-telor.webp","restaurant"],
+["Nasi Goreng Ikan Asin","Rp 43.000","menu_restaurant-nasi-goreng-ikan-asin.webp","restaurant"],
+["Nasi Goreng Kombinasi","Rp 41.000","menu_restaurant-nasi-goreng-kombinasi-yang-chow.webp","restaurant"],
+["Nasi Goreng Udang","Rp 46.000","menu_restaurant-nasi-goreng-udang.webp","restaurant"],
+["Kwetiau Kuah","Rp 41.000","menu_restaurant-kweetiaw-kuah.webp","restaurant"],
+["Kwetiau Goreng","Rp 41.000","menu_restaurant-kwetiaw-goreng.webp","restaurant"],
+["Mie Goreng Indonesia","Rp 41.000","menu_restaurant-mie-goreng-indonesia.webp","restaurant"],
+["Ifu Mie Goreng Saus","Rp 43.000","menu_restaurant-ifu-mie-goreng-saus.webp","restaurant"],
+["Mie Kuah","Rp 41.000","menu_restaurant-mie-kuah.webp","restaurant"],
+["Bihun Goreng","Rp 41.000","menu_restaurant-bihun-goreng.webp","restaurant"],
+["Bihun Kuah","Rp 41.000","menu_restaurant-bihun-kuah.webp","restaurant"],
+["Bihun Goreng Seafood","Rp 44.000","menu_restaurant-bihun-goreng-seafood.webp","restaurant"],
+["Ifu Mie Goreng","Rp 41.000","menu_restaurant-ifu-mie-goreng.webp","restaurant"],
+["Nasi Capcay","Rp 43.000","menu_restaurant-nasi-capcai.webp","restaurant"],
+["Sahofan","Rp 43.000","menu_restaurant-sa-oh-fan.webp","restaurant"],
+["Sahofan Tauco Sapi","Rp 47.000","menu_restaurant-sa-oh-fan-tauco-sapi.webp","restaurant"],
+["Omelet Jamur","Rp 41.000","menu_restaurant-omelette-jamur.webp","restaurant"],
+["Omelet Kentang & Sayur","Rp 38.000","menu_restaurant-omelette-kentang-sayur.webp","restaurant"],
+["Uitsmijter","Rp 52.000","menu_restaurant-uitsmijter.webp","restaurant"],
+["Telur Dadar dengan Roti","Rp 41.000","menu_restaurant-telur-dadar-dengan-roti.webp","restaurant"],
+["Roti Coklat","Rp 28.000","menu_restaurant-roti-coklat.webp","restaurant"],
+["Roti Daging","Rp 30.000","menu_restaurant-roti-daging.webp","restaurant"],
+["Roti Ham & Keju","Rp 34.000","menu_restaurant-roti-ham-dan-keju.webp","restaurant"],
+["Roti Mentega","Rp 26.000","menu_restaurant-roti-mentega.webp","restaurant"],
+["Roti Telur","Rp 28.000","menu_restaurant-roti-telur.webp","restaurant"],
+["Salad Ayam","Rp 42.000","menu_restaurant-slada-ayam.webp","restaurant"],
+["Salad Daging","Rp 42.000","menu_restaurant-slada-daging.webp","restaurant"],
+["Salad Sayur","Rp 39.000","menu_restaurant-slada-sayur.webp","restaurant"],
+["Salad Telur","Rp 39.000","menu_restaurant-slada-telur.webp","restaurant"],
+["Salad Udang","Rp 47.000","menu_restaurant-slada-udang.webp","restaurant"],
+["Huzaren Salad","Rp 42.000","menu_restaurant-huzaren-salad.webp","restaurant"],
+["Bitterballen","Rp 26.000","menu_restaurant-bitterballen.webp","restaurant"],
+["Kentang Goreng","Rp 28.000","menu_restaurant-kentang-goreng.webp","restaurant"],
+["Kroket Sapi","Rp 9.500","menu_restaurant-kroket-sapi.webp","restaurant"],
+["Risol Sapi","Rp 9.500","menu_bakery-risol-sapi.webp","restaurant"],
+["Pisang Goreng","Rp 17.000","menu_bakery-pisang-goreng.webp","restaurant"],
+["Pancake Coklat","Rp 32.000","menu_restaurant-pancake-coklat.webp","restaurant"],
+["Pancake Gula Merah","Rp 30.000","menu_restaurant-pancake-gula-merah-sirup.webp","restaurant"],
+["Pancake Pisang","Rp 34.000","menu_restaurant-pancake-pisang.webp","restaurant"],
+["Sup Asparagus Kepiting","Rp 31.000","menu_restaurant-sup-asparagus-kepiting.webp","restaurant"],
+["Sup Ayam","Rp 25.000","menu_restaurant-sup-ayam.webp","restaurant"],
+["Sup Bakso Ikan","Rp 24.000","menu_restaurant-sup-bakso-ikan.webp","restaurant"],
+["Sup Daging","Rp 25.000","menu_restaurant-sup-daging.webp","restaurant"],
+["Sup Jagung Ayam","Rp 31.000","menu_restaurant-sup-jagung-ayam.webp","restaurant"],
+["Sup Jagung Kepiting","Rp 31.000","menu_restaurant-sup-jagung-kepiting.webp","restaurant"],
+["Sup Tomat Sapi","Rp 31.000","menu_restaurant-sup-tomat-sapi.webp","restaurant"],
+["Sup Ikan","Rp 35.000","menu_restaurant-sup-ikan.webp","restaurant"],
+["Sup Sayur","Rp 19.000","menu_restaurant-sup-sayur.webp","restaurant"],
+["Sup Jamur","Rp 31.000","menu_restaurant-sup-mushroom-chinese.webp","restaurant"],
+["Ayam Bawang Bombay","Rp 65.000","menu_restaurant-ayam-bawang-besar.webp","restaurant"],
+["Ayam Goreng Mentega","Rp 55.000","menu_restaurant-ayam-goreng-mentega.webp","restaurant"],
+["Ayam Goreng Saus","Rp 55.000","","restaurant"],
+["Ayam Goreng Semboi","Rp 65.000","menu_restaurant-ayam-goreng-semboi.webp","restaurant"],
+["Ayam Gulung","Rp 65.000","menu_restaurant-ayam-gulung.webp","restaurant"],
+["Ayam Asam Manis","Rp 55.000","","restaurant"],
+["Ayam Jamur","Rp 59.000","menu_restaurant-ayam-jamur.webp","restaurant"],
+["Ayam Mabok","Rp 62.000","menu_restaurant-ayam-kukus-mabok.webp","restaurant"],
+["Capcay Goreng","Rp 40.000","menu_restaurant-capcai-goreng.webp","restaurant"],
+["Capcay Kuah","Rp 29.000","menu_restaurant-capcai-kuah.webp","restaurant"],
+["Capcay Seafood","Rp 50.000","menu_restaurant-capcai-seafood.webp","restaurant"],
+["Cumi-cumi Goreng Mentega","Rp 58.000","menu_restaurant-cumi-cumi-goreng-mentega.webp","restaurant"],
+["Cumi-cumi Tauco","Rp 58.000","menu_restaurant-cumi-cumi-tauco.webp","restaurant"],
+["Fuyunghai Bulat","Rp 44.000","menu_restaurant-fouejonghai-bulat.webp","restaurant"],
+["Fuyunghai Hancur","Rp 46.000","menu_restaurant-fouejonghai-hancur.webp","restaurant"],
+["Hot Plate Ayam","Rp 55.000","menu_restaurant-hot-plate-ayam.webp","restaurant"],
+["Hot Plate Daging Sapi","Rp 55.000","menu_restaurant-hot-plate-daging-lembu.webp","restaurant"],
+["Hot Plate Kangkung Seafood","Rp 50.000","menu_restaurant-hot-plate-kangkung-seafood.webp","restaurant"],
+["Hot Plate Udang","Rp 75.000","","restaurant"],
+["Ikan Asam Manis","Rp 55.000","menu_restaurant-ikan-asam-manis.webp","restaurant"],
+["Ikan Kakap Goreng","Rp 55.000","menu_restaurant-ikan-kakap-goreng.webp","restaurant"],
+["Ikan Kukus","Rp 55.000","menu_restaurant-ikan-kukus.webp","restaurant"],
+["Ikan Gulung","Rp 65.000","menu_restaurant-ikan-gulung.webp","restaurant"],
+["Jamur Goreng Rebung","Rp 42.000","menu_restaurant-jamur-goreng-rebung.webp","restaurant"],
+["Kailan Ayam","Rp 51.000","menu_restaurant-kailan-ayam.webp","restaurant"],
+["Kailan Jamur","Rp 51.000","menu_restaurant-kailan-jamur.webp","restaurant"],
+["Kailan Sapi","Rp 51.000","menu_restaurant-kailan-sapi.webp","restaurant"],
+["Kailan Saus Tiram","Rp 40.000","menu_restaurant-kailan-saus-tiram.webp","restaurant"],
+["Angsio Tahu","Rp 39.000","menu_restaurant-angsio-tahu-biasa.webp","restaurant"],
+["Angsio Tahu Jepang","Rp 41.000","menu_restaurant-angsio-tahu-jepang.webp","restaurant"],
+["Sapi Cabe Kering","Rp 55.000","menu_restaurant-sapi-cabe-kering.webp","restaurant"],
+["Steak Sapi ala Hong Kong","Rp 52.000","menu_restaurant-steak-sapi-ala-hongkong.webp","restaurant"],
+["Tauge Ikan Asin","Rp 43.000","menu_restaurant-tauge-ikan-asin.webp","restaurant"],
+["Tumis Ayam dengan Cabe Kering","Rp 55.000","menu_restaurant-tumis-ayam-dengan-cabe-kering.webp","restaurant"],
+["Tumis Ayam Kacang Mente","Rp 59.000","menu_restaurant-tumis-ayam-kacang-menthe.webp","restaurant"],
+["Tumis Udang Cabe Kering","Rp 75.000","menu_restaurant-tumis-udang-cabe-kering.webp","restaurant"],
+["Udang Goreng Mentega","Rp 75.000","menu_restaurant-udang-goreng-mentega.webp","restaurant"],
+["Udang Goreng Tepung","Rp 75.000","menu_restaurant-udang-goreng-tepung.webp","restaurant"],
+["Udang Saus Tomat","Rp 75.000","menu_restaurant-udang-saus-tomat.webp","restaurant"],
+["Udang Kukus","Rp 75.000","menu_restaurant-udang-kukus.webp","restaurant"],
+["Ikan Cabe Kering","Rp 55.000","menu_restaurant-ikan-cabe-kering.webp","restaurant"],
+
+
+["Sapi Kecap","Rp 55.000","menu_restaurant-sapi-kecap.webp","restaurant"],
+["Tahu Sapi Saus Pedas","Rp 46.000","menu_restaurant-tahu-sapi-saos-pedas.webp","restaurant"],
+["Shrimp Cocktail","Rp 48.000","","restaurant"],
+["Rendang Daging","Rp 40.000","menu_restaurant-rendang-daging.webp","restaurant"],
+["Gado-Gado","Rp 28.000","menu_restaurant-gado-gado.webp","restaurant"],
+["Roti Ham atau Keju","Rp 31.000","menu_restaurant-roti-ham-atau-keju.webp","restaurant"],
+["Sup Tomat","Rp 19.000","menu_restaurant-sup-tomat.webp","restaurant"],
+["Sup Telur","Rp 19.000","menu_restaurant-sup-telur.webp","restaurant"],
+["Sup Asparagus Kepiting (Eropa)","Rp 31.000","menu_restaurant-sup-asparagus-kepiting-eropa.webp","restaurant"],
+["Sup Jagung dengan Rebung & Kepiting","Rp 31.000","menu_restaurant-sup-jagung-dengan-rebung-dan-kepiting.webp","restaurant"],
+["Telur Dadar Tomat dengan Roti","Rp 37.000","menu_restaurant-telur-dadar-tomat-dengan-roti.webp","restaurant"],
+["Telur Dadar Daging dengan Roti","Rp 41.000","menu_restaurant-telur-dadar-daging-dengan-roti.webp","restaurant"],
+["Omelet Ham atau Keju","Rp 43.000","","restaurant"],
+["Omelet Ham & Keju","Rp 46.000","menu_restaurant-omelete-ham-dan-keju.webp","restaurant"],
+["Telur Dadar Udang dengan Roti","Rp 43.000","menu_restaurant-telur-dadar-udang-dengan-roti.webp","restaurant"],
+["Telur Mata Sapi","Rp 8.000","menu_restaurant-telur-mata-sapi.webp","restaurant"],
+["Steak Kakap Rebus dengan Kentang & Sayur","Rp 87.000","menu_restaurant-bistik-kakap-rebus-dengan-kentang-dan-sayur.webp","restaurant"],
+["Ikan Tauco","Rp 55.000","","restaurant"],
+["Steak Udang","Rp 94.000","","restaurant"],
+["Daging Mentah, Roti & Margarin","Rp 87.000","","restaurant"],
+["Nasi Goreng Tanpa Telur","Rp 35.000","","restaurant"],
+["Ayam Kukus","Rp 65.000","menu_restaurant-ayam-kukus.webp","restaurant"],
+["Tumis Udang Kacang Mente","Rp 78.000","menu_restaurant-tumis-udang-kacang-menthe.webp","restaurant"],
+["Udang Goreng","Rp 75.000","","restaurant"],
+["Cumi-cumi Cabe Kering","Rp 58.000","menu_restaurant-cumi-cumi-cabe-kering.webp","restaurant"],
+["Sapi Bawang Bombay","Rp 55.000","menu_restaurant-sapi-bawang-besar.webp","restaurant"],
+["Sapi Rebung","Rp 55.000","menu_restaurant-sapi-rebung.webp","restaurant"],
+["Tumis Kangkung","Rp 34.000","menu_restaurant-tumis-kangkung.webp","restaurant"],
+["Oyster Kailan","Rp 40.000","menu_restaurant-oyster-kailan.webp","restaurant"],
+["Hot Plate Ikan","Rp 55.000","menu_restaurant-hot-plate-ikan.webp","restaurant"],
+["Steak Ayam ala Hong Kong","Rp 52.000","menu_restaurant-steak-ayam-ala-hongkong.webp","restaurant"],
+["Ayam Goreng Bawang Putih","Rp 52.000","menu_restaurant-ayam-goreng-bawang-putih.webp","restaurant"],
+["Mocca Taart Persegi 25x25cm","Rp 345.000","menu_bakery-mocha-taart-persegi-25x25cm.webp","bakery"],
+["Mocca Taart Persegi Tabur Meses 25x25cm","Rp 355.000","menu_bakery-mocha-taart-persegi-tabur-meses-25x25cm.webp","bakery"],
+["Mocca Taart Bulat 25x25cm","Rp 335.000","menu_bakery-mocha-taart-bulat-25x25cm.webp","bakery"],
+["Mocca Taart Love","Rp 345.000","menu_bakery-mocha-taart-love.webp","bakery"],
+["Mocca Ekstra Persegi 30x30cm","Rp 600.000","menu_bakery-mocha-ekstra-persegi-30x30cm.webp","bakery"],
+["Irish Taart Persegi 25x25cm","Rp 395.000","menu_bakery-irish-taart-persegi-25x25cm.webp","bakery"],
+["Taart Coklat Persegi 25x25cm","Rp 370.000","menu_bakery-taart-coklat-persegi-25x25cm.webp","bakery"],
+["Ekstra Mini Mocca Persegi 12,5x25cm","Rp 180.000","menu_bakery-ekstra-mini-mocha-persegi-12-5x25cm.webp","bakery"],
+["Ekstra Mini Tabur Meses 12,5x25cm","Rp 185.000","","bakery"],
+["Ekstra Mini Coklat 12,5x25cm","Rp 195.000","","bakery"],
+["Aneka Irish","Rp 10.500","menu_bakery-golongan-irish.webp","bakery"],
+["Kue Taartjes Mocca Meses Coklat","Rp 9.500","menu_bakery-kue-taartjes-mocca-meses-coklat.webp","bakery"],
+["Roti Sosis","Rp 11.000","","bakery"],
+["Roti Ayam","Rp 11.500","menu_bakery-roti-ayam.webp","bakery"],
+["Risol Ayam","Rp 10.000","menu_bakery-risolles-ayam.webp","bakery"],
+["Donat Bulat","Rp 10.500","menu_bakery-donat-bulat.webp","bakery"],
+["Aneka Kue - Donat Sate","Rp 10.500","menu_bakery-donat-sate.webp","bakery"],
+["Aneka Kue - Piramide","Rp 10.000","menu_bakery-piramide.webp","bakery"],
+["Aneka Kue - Horen","Rp 10.000","menu_bakery-horen.webp","bakery"],
+["Aneka Kue - Kue Soes","Rp 10.000","menu_bakery-kue-soes.webp","bakery"],
+["Aneka Kue - Pie Nanas","Rp 10.000","menu_bakery-pie-nenas.webp","bakery"],
+["Aneka Kue - Ombykoek","Rp 10.000","menu_bakery-ombykoek.webp","bakery"],
+["Roti Tawar","Rp 20.000","menu_bakery-roti-tawar.webp","bakery"],
+["Spekulaas","Rp 190.000","menu_bakery-spekulaas.webp","bakery"],
+["Spekulaas Pop","Rp 50.000","menu_bakery-spekulaas-pop.webp","bakery"],
+["Coklat Baton Kecil","Rp 40.000","menu_bakery-coklat-batton-kecil.webp","bakery"],
+["Kattetong","Rp 120.000","menu_bakery-katetong.webp","bakery"],
+["Mocca Ekstra Bulat","Rp 580.000","","bakery"],
+["Mocca Super Persegi","Rp 980.000","","bakery"],
+["Mocca Super Bulat","Rp 955.000","","bakery"],
+["Irish Ekstra Persegi","Rp 685.000","","bakery"],
+["Irish Ekstra Bulat","Rp 670.000","","bakery"],
+["Irish Super Persegi","Rp 1.125.000","","bakery"],
+["Irish Super Bulat","Rp 1.100.000","","bakery"],
+["Irish Ekstra Mini","Rp 205.000","","bakery"],
+["Irish Bulat","Rp 385.000","","bakery"],
+["Irish Love","Rp 395.000","","bakery"],
+["Taart Coklat Bulat","Rp 360.000","","bakery"],
+["Taart Coklat Ekstra Persegi","Rp 640.000","","bakery"],
+["Taart Coklat Ekstra Bulat","Rp 625.000","","bakery"],
+["Taart Coklat Super Persegi","Rp 1.055.000","","bakery"],
+["Taart Coklat Super Bulat","Rp 1.025.000","","bakery"],
+["Taart Coklat Love","Rp 370.000","","bakery"],
+["Kastengel","-","","bakery"],
+["Aneka Kue - Moorkop Bulat","Rp 10.000","","bakery"],
+["Aneka Kue - Moorkop Panjang","Rp 10.000","menu_bakery-moorkop-panjang.webp","bakery"],
+["Aneka Kue - Muffin","Rp 10.000","menu_bakery-muffin.webp","bakery"],
+["One Month Baby Cake","Rp 235.000","","bakery"],
+["Kacang Tojin","Rp 35.000","menu_bakery-kacang-tojin.webp","bakery"],
+["Nastar","Rp 190.000","","bakery"],
+["Java","Rp 31.000","menu_restaurant-eskrim-java.webp","eskrim"],
+["Ystaart","Rp 31.000","menu_restaurant-eskrim-ystaart.webp","eskrim"],
+["Pukler","Rp 31.000","menu_restaurant-eskrim-pukler.webp","eskrim"],
+["Es Krim Single","Rp 20.000","menu_restaurant-eskrim-es-krim-single-coklat.webp","eskrim"],
+["Es Krim Double","Rp 40.000","menu_restaurant-eskrim-single-double-ice-cream.webp","eskrim"],
+["Es Johor","Rp 32.000","menu_restaurant-eskrim-es-johor.webp","eskrim"],
+["Banana Split","Rp 30.000","menu_restaurant-eskrim-banana-split.webp","eskrim"],
+["Moorkop Ice","Rp 30.000","menu_restaurant-eskrim-moorkop-ice.webp","eskrim"],
+["Es Krim Carmen Ice","Rp 30.000","menu_restaurant-eskrim-carmen-ice.webp","eskrim"],
+["Es Krim Buah","Rp 30.000","menu_restaurant-eskrim-ice-cream-buah.webp","eskrim"],
+["Peach Melba","Rp 30.000","menu_restaurant-eskrim-peach-melba.webp","eskrim"],
+["Es Krim Tutti Frutti","Rp 30.000","menu_restaurant-eskrim-ice-cream-tutty-frutti.webp","eskrim"],
+["Nougat Ice","Rp 23.000","menu_restaurant-eskrim-nougat-ice.webp","eskrim"],
+["Morning Glory","Rp 41.000","menu_restaurant-eskrim-morning-glory.webp","eskrim"],
+["Cafe Glace","Rp 34.000","menu_restaurant-eskrim-cafe-glace.webp","eskrim"],
+["Sorbet Tiptop","Rp 38.000","menu_restaurant-eskrim-sorbet-tiptop.webp","eskrim"],
+["Wiener Cafe","Rp 34.000","menu_restaurant-eskrim-wiener-cafe.webp","eskrim"],
+["Mexicaner","Rp 30.000","menu_restaurant-eskrim-mexicaner.webp","eskrim"],
+["Donauwellen","Rp 30.000","","eskrim"],
+["Es Krim Soda","Rp 32.000","","eskrim"],
+["Es Krim Coklat & Vanila","Rp 40.000","menu_restaurant-coklat-vanilla.webp","eskrim"],
+["Kopi Panas","Rp 27.000","menu_restaurant-minuman-kopi-panas.webp","minuman"],
+["Kopi Susu Dingin","Rp 31.000","menu_restaurant-minuman-kopi-susu-dingin.webp","minuman"],
+["Lemon Tea","Rp 25.000","menu_restaurant-minuman-lemon-tea.webp","minuman"],
+["Lime","Rp 25.000","menu_restaurant-minuman-lime.webp","minuman"],
+["Teh","Rp 12.000","menu_restaurant-minuman-teh.webp","minuman"],
+["Teh Dingin","Rp 12.000","menu_restaurant-minuman-teh-dingin.webp","minuman"],
+["Chinese Tea","Rp 32.000","menu_restaurant-minuman-chinese-tea.webp","minuman"],
+["Jus Alpukat","Rp 28.000","menu_restaurant-minuman-jus-alpukat.webp","minuman"],
+["Jus Sirsak","Rp 27.000","menu_restaurant-minuman-jus-sirsak.webp","minuman"],
+["Jus Kuini","Rp 26.000","menu_restaurant-minuman-jus-kuini.webp","minuman"],
+["Jus Belimbing","Rp 26.000","menu_restaurant-minuman-jus-belimbing.webp","minuman"],
+["Jus Jambu","Rp 27.000","","minuman"],
+["Jus Jeruk","Rp 27.000","menu_restaurant-minuman-jus-jeruk.webp","minuman"],
+["Jus Markisa","Rp 26.000","menu_restaurant-minuman-jus-markisa.webp","minuman"],
+["Jus Martabe","Rp 27.000","menu_restaurant-minuman-jus-martabe.webp","minuman"],
+["Jus Melon","Rp 27.000","menu_restaurant-minuman-jus-melon.webp","minuman"],
+["Jus Nanas","Rp 26.000","menu_restaurant-minuman-jus-nenas.webp","minuman"],
+["Jus Pepaya","Rp 26.000","menu_restaurant-minuman-jus-pepaya.webp","minuman"],
+["Jus Semangka","Rp 26.000","menu_restaurant-minuman-jus-semangka.webp","minuman"],
+["Jus Timun","Rp 26.000","menu_restaurant-minuman-jus-timun.webp","minuman"],
+["Jus Tomat","Rp 26.000","menu_restaurant-minuman-jus-tomat.webp","minuman"],
+["Jus Wortel","Rp 26.000","menu_restaurant-minuman-jus-wortel.webp","minuman"],
+["Fruit Cocktail","Rp 31.000","menu_restaurant-minuman-fruit-cocktail.webp","minuman"],
+["Longan","Rp 40.000","menu_restaurant-minuman-longan.webp","minuman"],
+["Jus Mix","Rp 28.000","","minuman"],
+["Kopi Susu Dingin Botol","Rp 31.000","","minuman"],
+["Kopi Susu Panas","Rp 30.000","","minuman"],
+["Kopi Dingin","Rp 28.000","","minuman"],
+["Teh Susu Panas","Rp 20.000","menu_restaurant-minuman-teh-susu-panas.webp","minuman"],
+["Teh Susu Dingin","Rp 22.000","","minuman"],
+["Coklat Susu Panas","Rp 28.000","","minuman"],
+["Coklat Susu Dingin","Rp 29.000","menu_restaurant-minuman-coklat-susu-dingin.webp","minuman"],
+["Slagroom","Rp 20.000","menu_restaurant-minuman-slagroom.webp","minuman"],
+["Susu Panas","Rp 20.000","","minuman"],
+["Jus Mangga","Rp 27.000","","minuman"],
+["Jus Terong Belanda","Rp 26.000","menu_restaurant-minuman-jus-terong-belanda.webp","minuman"],
+["Buah-buahan Segar","Rp 25.000","","minuman"],
+["Coca Cola","Rp 14.000","","minuman"],
+["Sprite","Rp 14.000","","minuman"],
+["Milk Soda","Rp 24.000","menu_restaurant-minuman-milk-soda.webp","minuman"],
+["Fanta Orange / Red","Rp 14.000","","minuman"],
+["Badak Sarsi","Rp 15.000","","minuman"],
+["Aqua Besar","Rp 19.000","","minuman"],
+["Aqua Kecil","Rp 13.000","","minuman"],
+["Heineken Big","Rp 60.000","","minuman"],
+["Bintang/Anker Big","Rp 50.000","","minuman"],
+["Bintang/Anker Small","Rp 35.000","","minuman"],
+["Guinness Stout","Rp 50.000","","minuman"],
+["Bintang Crystal","-","","minuman"],
+["Kopi Susu Segar Panas","Rp 28.000","menu_restaurant-minuman-kopi-susu-dengan-susu-segar-panas.webp","minuman"]
+];
+
+const grid = document.getElementById('grid');
+const tabsEl = document.getElementById('tabs');
+const countEl = document.getElementById('count');
+const qEl = document.getElementById('q');
+const langsEl = document.getElementById('langs');
+const heroSub = document.getElementById('heroSub');
+const eyebrowEl = document.getElementById('eyebrow');
+const footLoc = document.getElementById('footLoc');
+const footCredit = document.getElementById('footCredit');
+const topBtn = document.getElementById('top');
+const metaDesc = document.querySelector('meta[name="description"]');
+const modalOv = document.getElementById('modalOv');
+const mImg = document.getElementById('mImg');
+const mCat = document.getElementById('mCat');
+const mName = document.getElementById('mName');
+const mPrice = document.getElementById('mPrice');
+const modalX = document.getElementById('modalX');
+const splash = document.getElementById('splash');
+const splashTitle = document.getElementById('splashTitle');
+const splashBtn = document.getElementById('splashBtn');
+const splashHint = document.getElementById('splashHint');
+let activeCat = 'all';
+
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function imgFallback(el){
+  const d = document.createElement('div');
+  d.className = 'ph';
+  d.innerHTML = '<span>T</span>';
+  el.replaceWith(d);
+}
+window.imgFallback = imgFallback;
+
+function counts(){
+  const cats = S().cats;
+  const c = {all: MENU.length};
+  for(const k of Object.keys(cats)) if(k!=='all') c[k] = 0;
+  for(const m of MENU) c[m[3]]++;
+  return c;
+}
+function renderTabs(){
+  const cats = S().cats, c = counts();
+  tabsEl.innerHTML = Object.keys(cats).map(k =>
+    `<button class="tab${k===activeCat?' active':''}" data-cat="${k}">${cats[k]}<small>${c[k]}</small></button>`
+  ).join('');
+  tabsEl.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+    activeCat = b.dataset.cat;
+    renderTabs(); render();
+  }));
+}
+function renderLangs(){
+  const s = S();
+  langsEl.setAttribute('aria-label', s.langLabel);
+  langsEl.innerHTML = LANGS.map(l =>
+    `<button class="${l===lang?'active':''}" data-lang="${l}">${LANG_LABEL[l]}</button>`
+  ).join('');
+  langsEl.querySelectorAll('button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+}
+function setLang(l){
+  if(LANGS.indexOf(l) < 0 || l === lang) return;
+  lang = l;
+  try{ localStorage.setItem('tiptop-lang', l); }catch(e){}
+  applyLang();
+}
+function applyLang(){
+  const s = S();
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  document.title = s.title;
+  if(metaDesc) metaDesc.setAttribute('content', s.desc);
+  qEl.placeholder = s.search;
+  qEl.setAttribute('aria-label', s.search);
+  eyebrowEl.textContent = s.eyebrow;
+  heroSub.textContent = s.sub;
+  footLoc.textContent = s.foot;
+  footCredit.textContent = s.credit;
+  splashTitle.textContent = s.splashTitle;
+  splashBtn.textContent = s.splashBtn;
+  splashHint.textContent = s.tapHint;
+  topBtn.setAttribute('aria-label', s.top);
+  renderLangs(); renderTabs(); render();
+}
+function openModal(m){
+  const s = S(), name = tname(m[0]);
+  mCat.textContent = s.cats[m[3]];
+  mName.textContent = name;
+  mPrice.innerHTML = m[1] === '-'
+    ? `<div class="na">${s.na}</div>`
+    : `<div class="price">${esc(m[1])}</div>`;
+  mImg.innerHTML = m[2]
+    ? `<img src="${IMG_BASE}${m[2]}" alt="${esc(name)}" onerror="imgFallback(this)">`
+    : `<div class="ph"><span>T</span></div>`;
+  modalX.setAttribute('aria-label', s.close);
+  modalOv.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(){
+  modalOv.classList.remove('open');
+  document.body.style.overflow = '';
+}
+let splashClosed = false;
+function closeSplash(){
+  if(splashClosed) return;
+  splashClosed = true;
+  splash.classList.remove('show');
+  document.body.style.overflow = '';
+  setTimeout(() => { splash.style.display = 'none'; }, 600);
+}
+function render(){
+  const s = S(), cats = s.cats;
+  const q = qEl.value.trim().toLowerCase();
+  const items = MENU.filter(m => {
+    const nm = tname(m[0]).toLowerCase();
+    return (activeCat==='all' || m[3]===activeCat) &&
+      (!q || m[0].toLowerCase().includes(q) || nm.includes(q));
+  });
+  countEl.textContent = s.showing(items.length, MENU.length);
+  if(!items.length){
+    grid.innerHTML = `<div class="empty">${s.empty}</div>`;
+    return;
+  }
+  const frag = document.createDocumentFragment();
+  const tmp = document.createElement('div');
+  for(const m of items){
+    const name = tname(m[0]), price = m[1], img = m[2], cat = m[3];
+    const media = img
+      ? `<img src="${IMG_BASE}${img}" alt="${esc(name)}" loading="lazy" decoding="async" onerror="imgFallback(this)">`
+      : `<div class="ph"><span>T</span></div>`;
+    const priceHtml = price === '-'
+      ? `<span class="pbadge na">${s.na}</span>`
+      : `<span class="pbadge">${esc(price)}</span>`;
+    tmp.innerHTML = `<article class="card"><div class="im">${media}${priceHtml}</div><div class="bd"><div class="cat">${cats[cat]}</div><h3>${esc(name)}</h3></div></article>`;
+    const art = tmp.firstChild;
+    art.style.cursor = 'pointer';
+    art.setAttribute('role', 'button');
+    art.setAttribute('tabindex', '0');
+    art.addEventListener('click', () => openModal(m));
+    art.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openModal(m); }
+    });
+    frag.appendChild(art);
+  }
+  grid.innerHTML = '';
+  grid.appendChild(frag);
+}
+qEl.addEventListener('input', render);
+applyLang();
+
+window.addEventListener('scroll', () => topBtn.classList.toggle('show', window.scrollY > 600), {passive:true});
+topBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+modalX.addEventListener('click', closeModal);
+modalOv.addEventListener('click', e => { if(e.target === modalOv) closeModal(); });
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && modalOv.classList.contains('open')) closeModal();
+  if(e.key === 'Escape' && splash.classList.contains('show')) closeSplash();
+});
+splashBtn.addEventListener('click', e => { e.stopPropagation(); closeSplash(); });
+splash.addEventListener('click', closeSplash);
+document.body.style.overflow = 'hidden';
+setTimeout(() => splash.classList.add('show'), 80);
+</script>
+</body>
+</html>
